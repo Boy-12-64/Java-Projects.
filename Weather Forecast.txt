@@ -1,0 +1,55 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
+public class WeatherForecast {
+    public static void main(String[] args) {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+
+        try {
+            System.out.print("Enter the city name: ");
+            String city = reader.readLine();
+
+            double temperature = getTemperature(city);
+            String condition = getWeatherCondition(city);
+
+            if (temperature != Double.MIN_VALUE && condition != null) {
+                System.out.println("Weather forecast for " + city + ":");
+                System.out.println("Temperature: " + temperature + "°C");
+                System.out.println("Condition: " + condition);
+            } else {
+                System.out.println("Failed to retrieve weather information for " + city);
+            }
+        } catch (IOException e) {
+            System.out.println("Error reading input: " + e.getMessage());
+        }
+    }
+
+    public static double getTemperature(String city) {
+        // Simulated method to retrieve temperature from a weather API or data source
+        // Replace with actual implementation to fetch temperature for the given city
+        if (city.equalsIgnoreCase("New York")) {
+            return 23.5;
+        } else if (city.equalsIgnoreCase("London")) {
+            return 18.2;
+        } else if (city.equalsIgnoreCase("Tokyo")) {
+            return 28.7;
+        } else {
+            return Double.MIN_VALUE; // Indicates failure to retrieve temperature
+        }
+    }
+
+    public static String getWeatherCondition(String city) {
+        // Simulated method to retrieve weather condition from a weather API or data source
+        // Replace with actual implementation to fetch weather condition for the given city
+        if (city.equalsIgnoreCase("New York")) {
+            return "Sunny";
+        } else if (city.equalsIgnoreCase("London")) {
+            return "Cloudy";
+        } else if (city.equalsIgnoreCase("Tokyo")) {
+            return "Rainy";
+        } else {
+            return null; // Indicates failure to retrieve weather condition
+        }
+    }
+}

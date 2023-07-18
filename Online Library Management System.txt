@@ -1,0 +1,109 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
+
+
+class Book {
+    private String title;
+    private String author;
+    private boolean available;
+
+    public Book(String title, String author) {
+        this.title = title;
+        this.author = author;
+        this.available = true;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public boolean isAvailable() {
+        return available;
+    }
+
+    public void setAvailable(boolean available) {
+        this.available = available;
+    }
+}
+
+class Library {
+    private List<Book> books;
+
+    public Library() {
+        books = new ArrayList<>();
+    }
+
+    public void addBook(Book book) {
+        books.add(book);
+    }
+
+    public void displayBooks() {
+        System.out.println("Library Books:");
+        for (Book book : books) {
+            System.out.println("Title: " + book.getTitle());
+            System.out.println("Author: " + book.getAuthor());
+            System.out.println("Availability: " + (book.isAvailable() ? "Available" : "Not Available"));
+            System.out.println("--------------------");
+        }
+    }
+public class LibraryManagementSystem {
+    public static void main(String[] args) {
+        Library library = new Library();
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+
+        // Adding some sample books to the library
+        library.addBook(new Book("Java Programming", "John Doe"));
+        library.addBook(new Book("Python Basics", "Jane Smith"));
+        library.addBook(new Book("Web Development 101", "Michael Johnson"));
+
+        int choice;
+        boolean exit = false;
+        while (!exit) {
+            System.out.println("Library Management System Menu:");
+            System.out.println("1. Display all books");
+            System.out.println("2. Borrow a book");
+            System.out.println("3. Return a book");
+            System.out.println("4. Exit");
+            System.out.print("Enter your choice: ");
+
+            try {
+                choice = Integer.parseInt(reader.readLine());
+
+                switch (choice) {
+                    case 1:
+                        library.displayBooks();
+                        break;
+                    case 2:
+                        System.out.print("Enter the title of the book to borrow: ");
+                        String borrowTitle = reader.readLine();
+                        library.borrowBook(borrowTitle);
+                        break;
+                    case 3:
+                        System.out.print("Enter the title of the book to return: ");
+                        String returnTitle = reader.readLine();
+                        library.returnBook(returnTitle);
+                        break;
+                    case 4:
+                        exit = true;
+                        System.out.println("Exiting Library Management System. Goodbye!");
+                        break;
+                    default:
+                        System.out.println("Invalid choice. Please enter a valid option.");
+                }
+
+                System.out.println("--------------------");
+            } catch (IOException e) {
+                System.out.println("Error reading input: " + e.getMessage());
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid choice. Please enter a valid option.");
+            }
+        }
+    }
+}
